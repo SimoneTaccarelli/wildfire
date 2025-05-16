@@ -2,18 +2,22 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { app } from 'firebase-admin';
+
 
 dotenv.config();
-app = express();
-app.use(cors());
-app.use(express.json());
+const server = express();
+server.use(cors());
+server.use(express.json());
 
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGODB_URI, {})
 
-app.listen(process.env.BACKEND_URL || "http://localhost:8000", () => {
-    console.log(`Server is running on ${process.env.BACKEND_URL || "http://localhost:8000"}`);
-    });
+mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDB');
+});
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+server.listen(process.env.PORT, () => {
+    console.log(`Server is running on port ${process.env.PORT}`);
+});
