@@ -1,22 +1,41 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const InventorySchema = new mongoose.Schema({
-  card: { type: mongoose.Schema.Types.ObjectId, ref: 'Card', required: true },
-  quantita: { type: Number, required: true },
-  condizione: {
-    type: String,
-    enum: ['Nuova', 'Buona', 'Usata'],
-    default: 'Buona'
+  card: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Card',
+    required: true
   },
-  lingua: { type: String, default: 'ITA' }, // ITA, ENG, ecc.
-  foil: { type: Boolean, default: false },
-  prezzoVendita: { type: Number, required: true },
-  prezzoAcquisto: { type: Number },
-  note: { type: String },
-  dataAggiunta: { type: Date, default: Date.now },
+  condition: {
+    type: String,
+    enum: ['mint', 'near mint', 'excellent', 'good', 'played', 'poor'],
+    required: true
+  },
+  language: {
+    type: String,
+    default: 'English'
+  },
+  isFoil: {
+    type: Boolean,
+    default: false
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  isVisible: {
+    type: Boolean,
+    default: true
+  }
 }, {
   timestamps: true
 });
 
-const Inventory = mongoose.model("Inventory", cardSchema);
+const Inventory = mongoose.model('Inventory', InventorySchema);
 export default Inventory;

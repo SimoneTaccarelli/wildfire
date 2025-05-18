@@ -10,6 +10,7 @@ const server = express();
 server.use(cors());
 server.use(express.json());
 
+
 admin.initializeApp({
     credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_CREDENTIALS)),
 });
