@@ -3,12 +3,15 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import admin from 'firebase-admin';
+import authRoutes from './routes/auth.js';
 
 
 dotenv.config();
 const server = express();
 server.use(cors());
 server.use(express.json());
+
+server.use('/api/v1/auth', authRoutes);
 
 
 admin.initializeApp({
